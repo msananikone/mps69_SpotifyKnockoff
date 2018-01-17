@@ -17,6 +17,10 @@ public class Spotify {
 		try {
 			Class.forName("com.mysqpl.jdbc.Driver").newInstance();
 			Connection conn = DriverManager.getConnection(connString);
+			
+			String sql = "SELECT * FROM users;";
+			
+			Statement statement = conn.createStatement();
 		} catch(InstantiationException | IllegalAccessException | ClassNotFoundException e){
 			e.printStackTrace();
 		}
