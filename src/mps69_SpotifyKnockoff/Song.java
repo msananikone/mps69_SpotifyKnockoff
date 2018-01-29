@@ -76,7 +76,7 @@ public class Song {
 		
 		
 	}
-	
+
 	/**
 	 * @constructor Song(String songID)
 	 * @param songID String
@@ -141,4 +141,23 @@ public class Song {
 		return songArtists;
 	}
 
+	public void setSongID(String songID) {
+		this.songID = songID;
+	}
+
+	public void setTitle(String title) {
+		this.title = title;
+	}
+
+	public void setLength(double length) {
+		this.length = length;
+	}
+
+	public void setRecordDate(String recordDate) {
+		this.recordDate = recordDate;
+	}
+
+	public void setSongArtists(Hashtable<String, Artist> songArtists) {
+		this.songArtists = songArtists;
+	}
 }
