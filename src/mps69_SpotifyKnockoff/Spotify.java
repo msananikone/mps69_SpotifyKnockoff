@@ -23,23 +23,20 @@ public class Spotify {
 			Class.forName("com.mysql.jdbc.Driver").newInstance();
 			Connection conn = DriverManager.getConnection(connString);
 			
-			//comment this out if using INSERT sql string
-			String sql = "SELECT * FROM users;";
+			String sql = "SELECT * FROM users;"; //comment this out if using INSERT sql string (1)
 			
 			//String sql = "INSERT INTO `spotify_knockoff`.`users`\r\n" + 
 			//		"(`user_id`, `first_name`, `last_name`, `email`, `password`)\r\n" + "VALUES\r\n" + 
-			//		"(UUID(), 'Monica', 'S', 'mps69@pitt.edu',MD5('password4'));";
+			//		"(UUID(), 'Monica', 'S', 'mps69@pitt.edu',MD5('password4'));"; //(1)
 			
 			Statement statement = conn.createStatement();
-			//comment rs out if using INSERT sql string
-			ResultSet rs = statement.executeQuery(sql);
+			ResultSet rs = statement.executeQuery(sql); //comment this out if using INSERT sql string (1)
 			
 			while(rs.next()) {
 				System.out.println(rs.getString(1) + "\t" +rs.getString(2) + "\t" + rs.getString("last_name"));
 			}
 			
-			//comment this if NOT using INSERT sql statement
-			//statement.executeUpdate(sql);
+			statement.executeUpdate(sql); //comment this if NOT using INSERT sql statement (2)
 			
 		} catch (InstantiationException | IllegalAccessException | ClassNotFoundException e) {
 			e.printStackTrace();
