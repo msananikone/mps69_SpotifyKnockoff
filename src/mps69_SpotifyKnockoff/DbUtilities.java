@@ -21,10 +21,10 @@ import javax.swing.table.DefaultTableModel;
 public class DbUtilities {
 
     private Connection conn = null; // connection object
-    private String hostName = "127.0.0.1:3307"; // server address + port number
-    private String dbName = "bank1017"; // default database name
-    private String dbUserName = "root"; // login name for the database server
-    private String dbPassword = "bitnami"; // password for the database server
+    private String hostName = "sis-teach-01.sis.pitt.edu"; // server address + port number
+    private String dbName = "spotify_knockoff"; // default database name
+    private String dbUserName = "spotifyUser"; // login name for the database server
+    private String dbPassword = "spotifyUser123"; // password for the database server
 
     /**
      * Default constructor creates a connection to database at the time of instantiation.
@@ -70,6 +70,27 @@ public class DbUtilities {
             System.err.println("Unable to connect to database");
         }
     }
+    
+    /**
+     * Deletes database connection using credentials stored in class variables. 
+     * So webserver will kill the connection from a pool once we are done using it.
+     * Try/catch block is from getResultSet
+     * This is a public connection to access externally
+     * (Housekeeping)
+     */
+    public void closeDbConnection(){
+    	try {
+            if(conn != null){ // Check if connection object already exists
+                conn.close();
+                conn = null;
+            }
+            
+        } catch (Exception e) {
+        	e.printStackTrace(); // debug
+            
+        }
+    }
+    
 
 
     /**
@@ -87,8 +108,7 @@ public class DbUtilities {
             return statement.executeQuery(sql); // Return ResultSet
         } catch (Exception e) {
         	e.printStackTrace(); // debug
-            //ErrorLogger.log(e.getMessage()); // Log error
-            //ErrorLogger.log(sql); // Log SELECT query
+            
         }
         return null;
     }
@@ -108,8 +128,7 @@ public class DbUtilities {
             return true;
         } catch (Exception e) {
         	e.printStackTrace(); // debug
-            //ErrorLogger.log(e.getMessage()); // Log error
-            //ErrorLogger.log(sql); // Log INSERT, UPDATE, DELETE query
+            
         }
         return false;
     }
@@ -178,6 +197,11 @@ public class DbUtilities {
 			data.add(vector);
 		}
 		return new DefaultTableModel(data, columnNames);
+	}
+
+    //returns connection object
+	public Connection getConn() {
+		return conn;
 	}
     
 }
