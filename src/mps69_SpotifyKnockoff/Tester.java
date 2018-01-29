@@ -25,12 +25,11 @@ public class Tester {
 			while(rs.next()){ //for each result that comes in, creates new object
 				Song s = new Song(rs.getString("song_id"));
 				songList.put(s.getSongID(), s);
-				//System.out.println(s.getTitle()); //returns song titles from db
+				System.out.println(s.getTitle()); //returns song titles from db
 			}
 			db.closeDbConnection();
 			db = null;
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		

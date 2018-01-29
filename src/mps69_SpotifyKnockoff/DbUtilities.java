@@ -101,8 +101,8 @@ public class DbUtilities {
      */
     public ResultSet getResultSet(String sql) throws SQLException {  
         try {
-            if(conn == null){ // Check if connection object already exists
-                createDbConnection(); // If does not exist, create new connection
+            if(conn == null){ //Check if connection object already exists
+                createDbConnection(); //If conn does NOT exist, creates new connection
             }
             Statement statement = conn.createStatement();
             return statement.executeQuery(sql); // Return ResultSet

@@ -23,11 +23,11 @@ public class Spotify {
 			Class.forName("com.mysql.jdbc.Driver").newInstance();
 			Connection conn = DriverManager.getConnection(connString);
 			
-			String sql = "SELECT * FROM users;"; //comment this out if using INSERT sql string (1)
+			//String sql = "SELECT * FROM users;"; //comment this out if using INSERT sql string (1)
 			
-			//String sql = "INSERT INTO `spotify_knockoff`.`users`\r\n" + 
-			//		"(`user_id`, `first_name`, `last_name`, `email`, `password`)\r\n" + "VALUES\r\n" + 
-			//		"(UUID(), 'Monica', 'S', 'mps69@pitt.edu',MD5('password4'));"; //(1)
+			String sql = "INSERT INTO `spotify_knockoff`.`users`\r\n" + 
+					"(`user_id`, `first_name`, `last_name`, `email`, `password`)\r\n" + "VALUES\r\n" + 
+					"(UUID(), 'Monica', 'S', 'mps69@pitt.edu',MD5('password4'));"; //(1)
 			
 			Statement statement = conn.createStatement();
 			ResultSet rs = statement.executeQuery(sql); //comment this out if using INSERT sql string (1)
