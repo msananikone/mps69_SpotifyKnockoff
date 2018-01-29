@@ -19,6 +19,15 @@ public class Album {
 	private int length;
 	Map <Song, Song> albumSongs;
 	
+	/**
+	 * @constructor Album(String title, String releaseDate, String recordingCompany, int numberOfTracks, String pmrcRating, int length)
+	 * @param title String
+	 * @param releaseDate String
+	 * @param recordingCompany String
+	 * @param numberOfTracks int
+	 * @param pmrcRating String
+	 * @param length int
+	 */
 	public Album(String title, String releaseDate, String recordingCompany, int numberOfTracks, String pmrcRating, int length) {
 		
 	}

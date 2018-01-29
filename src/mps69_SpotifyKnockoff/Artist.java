@@ -13,6 +13,12 @@ public class Artist {
 	private String bandName;
 	private String bio;
 	
+	/**
+	 * @constructor Artist(String firstName, String lastName, String bandName)
+	 * @param firstName String
+	 * @param lastName double
+	 * @param bandName String
+	 */
 	public Artist(String firstName, String lastName, String bandName) {
 		
 	}
