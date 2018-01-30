@@ -6,12 +6,15 @@
 
 package mps69_SpotifyKnockoff;
 
+import java.util.Hashtable;
+
 public class Artist {
 	private String artistID;
 	private String firstName;
 	private String lastName;
 	private String bandName;
 	private String bio;
+	Hashtable<String, Artist> songArtists;
 	
 	/**
 	 * @constructor Artist(String firstName, String lastName, String bandName)
@@ -30,7 +33,8 @@ public class Artist {
 	public void deleteArtist(String artistID) {
 		
 	}
-
+	
+	//Getters and Setters
 	public String getFirstName() {
 		return firstName;
 	}
@@ -66,5 +70,9 @@ public class Artist {
 	public String getArtistID() {
 		return artistID;
 	}
-
+	
+	public void addArtist(Artist artist) {
+		songArtists.put(artist.getArtistID(), artist);
+	}
+	
 }
