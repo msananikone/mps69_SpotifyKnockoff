@@ -33,6 +33,7 @@ public class Song {
 	 * @param albumID String
 	 * To add a song that doesn't exist in the database
 	 */
+	
 	public Song(String title, double length, String releaseDate, String recordDate, String albumID){
 		this.title = title;
 		this.length = length;
@@ -41,25 +42,24 @@ public class Song {
 		this.songID = UUID.randomUUID().toString(); //without toString, it returns an object
 		this.albumID = albumID;
 		
-		// System.out.println(this.songID); //go to tester class and create a song
-		// String sql = "INSERT INTO song (song_id,title,length,file_path,release_date,record_date,fk_album_id) "; //need trailing space so VALUES sql is called correctly
-		// sql += "VALUES ('" + this.songID + "', '" + this.title + "', " + this.length + ", '', '" + this.releaseDate + "', '" + this.recordDate + "', '" + this.albumID + "');";
+		//System.out.println(this.songID); //go to tester class and create a song
+		//String sql = "INSERT INTO song (song_id,title,length,file_path,release_date,record_date,fk_album_id) "; //need trailing space so VALUES sql is called correctly
+		//sql += "VALUES ('" + this.songID + "', '" + this.title + "', " + this.length + ", '', '" + this.releaseDate + "', '" + this.recordDate + "', '" + this.albumID + "');";
 		
-		
+		//Trailing space is important for query to properly execute in MySQL
 		String sql = "INSERT INTO song (song_id,title,length,file_path,release_date,record_date,fk_album_id) ";
 		sql += "VALUES (?, ?, ?, ?, ?, ?, ?);";
 		
-		System.out.println(sql);
-		
+		//System.out.println(sql);		
 		try {
 			DbUtilities db = new DbUtilities();
 			Connection conn = db.getConn();
 			PreparedStatement ps = conn.prepareStatement(sql);
-			//jdbc validates input from malicious by using preparedstatements
+			//JDBC validates input from malicious users by using PreparedStatements
 			//treats entire string as a literal (not a sql statement from concatenating)
 			
 			ps.setString(1, this.songID);
-			ps.setString(2,  this.title);
+			ps.setString(2, this.title);
 			ps.setDouble(3, this.length);
 			ps.setString(4, ""); 
 			ps.setString(5, this.releaseDate);
@@ -69,22 +69,20 @@ public class Song {
 			
 			db.closeDbConnection();
 			db = null;
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
+		} catch (SQLException e){
 			e.printStackTrace();
-		}
-		
-		
+		}	
 	}
-
+	
 	/**
 	 * @constructor Song(String songID)
 	 * @param songID String
 	 * To pull out an existing song from the database
 	 */
+	
 	public Song(String songID){
 		String sql = "SELECT * FROM song WHERE song_id = '" + songID + "';";
-		// System.out.println(sql);
+		//System.out.println(sql);
 		DbUtilities db = new DbUtilities();
 		try {
 			ResultSet rs = db.getResultSet(sql);
@@ -96,15 +94,14 @@ public class Song {
 				this.recordDate = rs.getDate("record_date").toString();
 				this.length = rs.getDouble("length");
 				this.albumID = rs.getString("fk_album_id");
-				// System.out.println("Song title from database: " + this.title);
+				//System.out.println("Song title from database: " + this.title);
 			}
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 				
 	}
-
+	
 	public String getReleaseDate() {
 		return releaseDate;
 	}

@@ -80,7 +80,7 @@ public class DbUtilities {
      */
     public void closeDbConnection(){
     	try {
-            if(conn != null){ // Check if connection object already exists
+            if(conn != null){ // Check if connection object already exists and close it
                 conn.close();
                 conn = null;
             }
