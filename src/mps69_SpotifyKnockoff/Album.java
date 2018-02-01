@@ -23,7 +23,7 @@ public class Album {
 	private int numberOfTracks;
 	private String pmrcRating;
 	private double length;
-	//Map <Song, Song> albumSongs;
+	Hashtable <Song, Song> albumSongs;
 	Hashtable<String, Artist> songArtists;
 	
 	/**
@@ -105,19 +105,29 @@ public class Album {
 	}
 	
 	private void deleteAlbum(String albumID) {
-		
+		String sql = "DELETE FROM album WHERE album_id = '" + albumID + "';";
+		DbUtilities db = new DbUtilities();
+		db.executeQuery(sql);
+		System.out.println("Album deleted from database.");
 	}
 	
 	private void addSong(Song song) {
-		
+		/*
+		albumSongs.put(song, this.albumID);
+		System.out.println("Added song to " + this.title);
+		*/
 	}
 	
 	private void deleteSong(String songID) {
-		
+		Song song = new Song(songID);
+		albumSongs.remove(song);
+		//this.title = album "title" from db
+		System.out.println("Deleted song from " + this.title);
 	}
 	
 	private void deleteSong(Song song) {
-		
+		albumSongs.remove(song);
+		System.out.println("Deleted song from " + this.title);
 	}
 	
 	//Getters
@@ -143,7 +153,7 @@ public class Album {
 		return pmrcRating;
 	}
 
-	public int getLength() {
+	public double getLength() {
 		return length;
 	}
 	public Map<Song, Song> getAlbumSongs() {
@@ -174,9 +184,9 @@ public class Album {
 	public void setLength(int length) {
 		this.length = length;
 	}
-	public void setAlbumSongs(Map<Song, Song> albumSongs) {
+	/*public void setAlbumSongs(Map<Song, Song> albumSongs) {
 		this.albumSongs = albumSongs;
-	}
+	}*/
 	public void setCoverImagePath(String coverImagePath) {
 		this.coverImagePath = coverImagePath;
 	}
