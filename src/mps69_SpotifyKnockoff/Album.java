@@ -6,7 +6,13 @@
 
 package mps69_SpotifyKnockoff;
 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.Hashtable;
 import java.util.Map;
+import java.util.UUID;
 
 public class Album {
 	private String albumID;
@@ -16,8 +22,9 @@ public class Album {
 	private String recordingCompany;
 	private int numberOfTracks;
 	private String pmrcRating;
-	private int length;
-	Map <Song, Song> albumSongs;
+	private double length;
+	//Map <Song, Song> albumSongs;
+	Hashtable<String, Artist> songArtists;
 	
 	/**
 	 * @constructor Album(String title, String releaseDate, String recordingCompany, int numberOfTracks, String pmrcRating, int length)
@@ -26,14 +33,75 @@ public class Album {
 	 * @param recordingCompany String
 	 * @param numberOfTracks int
 	 * @param pmrcRating String
-	 * @param length int
+	 * @param length double
 	 */
-	public Album(String title, String releaseDate, String recordingCompany, int numberOfTracks, String pmrcRating, int length) {
+	public Album(String title, String releaseDate, String recordingCompany, int numberOfTracks, String pmrcRating, double length) {
+		/**
+		 * Create new album record in the db
+		 * Create new Album OBJECT
+		 * Generate an albumID using java.util.UUID.randomUUIUD()
+		 * Set corresponding class properties
+		 */
+		this.title = title;
+		this.releaseDate = releaseDate;
+		this.recordingCompany = recordingCompany;
+		this.numberOfTracks = numberOfTracks;
+		this.pmrcRating = pmrcRating;
+		this.length = length;
+		this.albumID = UUID.randomUUID().toString(); //without toString, it returns an object
 		
-	}
+		//System.out.println(this.songID); //go to tester class and create a song
+		//String sql = "INSERT INTO song (song_id,title,length,file_path,release_date,record_date,fk_album_id) "; //need trailing space so VALUES sql is called correctly
+		//sql += "VALUES ('" + this.songID + "', '" + this.title + "', " + this.length + ", '', '" + this.releaseDate + "', '" + this.recordDate + "', '" + this.albumID + "');";
+		
+		//Trailing space is important for query to properly execute in MySQL
+		String sql = "INSERT INTO album (album_id, title, release_date, cover_image_path, recording_company_name, number_of_tracks, PMRC_rating, length) ";
+		sql += "VALUES (?, ?, ?, ?, ?, ?, ?, ?);";
+		
+		System.out.println(sql);		
+		try {
+			DbUtilities db = new DbUtilities();
+			Connection conn = db.getConn();
+			PreparedStatement ps = conn.prepareStatement(sql);
+			//JDBC validates input from malicious users by using PreparedStatements
+			//treats entire string as a literal (not a sql statement from concatenating)
+			
+			ps.setString(1, this.albumID);
+			ps.setString(2, this.title);
+			ps.setString(3, this.releaseDate);
+			ps.setString(4, coverImagePath); //cover_image_path
+			ps.setString(5, this.recordingCompany);
+			ps.setInt(6, this.numberOfTracks); 
+			ps.setString(7, this.pmrcRating);
+			ps.setDouble(8, this.length);
+			ps.executeUpdate();
+			
+			db.closeDbConnection();
+			db = null;
+		} catch (SQLException e){
+			e.printStackTrace();
+		}	
+		}
 	
 	public Album(String albumID) {
-		
+		String sql = "SELECT * FROM album WHERE album_id = '" + albumID + "';";
+		DbUtilities db = new DbUtilities();
+		try {
+			ResultSet rs = db.getResultSet(sql);
+			while(rs.next()){
+				this.albumID = rs.getString("album_id");
+				this.title = rs.getString("title");
+				this.releaseDate = rs.getDate("release_date").toString();
+				this.coverImagePath = rs.getString("cover_image_path");
+				this.recordingCompany = rs.getString("recording_company_name");
+				this.numberOfTracks = rs.getInt("number_of_tracks");
+				this.pmrcRating = rs.getString("PMRC_rating");
+				this.length = rs.getDouble("length");
+				System.out.println("Album title from database: " + this.title);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
 	}
 	
 	private void deleteAlbum(String albumID) {
@@ -52,57 +120,68 @@ public class Album {
 		
 	}
 	
+	//Getters
+	//title, releaseDate, recordingCompany, numberOfTracks, pmrcRating, length, albumSongs, albumID
 	public String getTitle() {
 		return title;
-	}
-	public void setTitle(String title) {
-		this.title = title;
 	}
 	public String getReleaseDate() {
 		return releaseDate;
 	}
-	public void setReleaseDate(String releaseDate) {
-		this.releaseDate = releaseDate;
-	}
 	public String getCoverImagePath() {
 		return coverImagePath;
-	}
-	public void setCoverImagePath(String coverImagePath) {
-		this.coverImagePath = coverImagePath;
 	}
 	public String getRecordingCompany() {
 		return recordingCompany;
 	}
-	public void setRecordingCompany(String recordingCompany) {
-		this.recordingCompany = recordingCompany;
-	}
+
 	public int getNumberOfTracks() {
 		return numberOfTracks;
 	}
-	public void setNumberOfTracks(int numberOfTracks) {
-		this.numberOfTracks = numberOfTracks;
-	}
+
 	public String getPmrcRating() {
 		return pmrcRating;
 	}
-	public void setPmrcRating(String pmrcRating) {
-		this.pmrcRating = pmrcRating;
-	}
+
 	public int getLength() {
 		return length;
 	}
-	public void setLength(int length) {
-		this.length = length;
-	}
 	public Map<Song, Song> getAlbumSongs() {
-		return albumSongs;
+		return getAlbumSongs();
 	}
-	public void setAlbumSongs(Map<Song, Song> albumSongs) {
-		this.albumSongs = albumSongs;
-	}
+
 	public String getAlbumID() {
 		return albumID;
 	}
 	
-
+	//Setters
+	//title, releaseDate, recordingCompany, numberOfTracks, pmrcRating, length, albumSongs, coverImagePath
+	public void setTitle(String title) {
+		this.title = title;
+	}
+	public void setReleaseDate(String releaseDate) {
+		this.releaseDate = releaseDate;
+	}
+	public void setRecordingCompany(String recordingCompany) {
+		this.recordingCompany = recordingCompany;
+	}
+	public void setNumberOfTracks(int numberOfTracks) {
+		this.numberOfTracks = numberOfTracks;
+	}
+	public void setPmrcRating(String pmrcRating) {
+		this.pmrcRating = pmrcRating;
+	}
+	public void setLength(int length) {
+		this.length = length;
+	}
+	public void setAlbumSongs(Map<Song, Song> albumSongs) {
+		this.albumSongs = albumSongs;
+	}
+	public void setCoverImagePath(String coverImagePath) {
+		this.coverImagePath = coverImagePath;
+	}
+	
+	public Hashtable<String, Artist> getSongArtists() {
+		return songArtists;
+	}	
 }
