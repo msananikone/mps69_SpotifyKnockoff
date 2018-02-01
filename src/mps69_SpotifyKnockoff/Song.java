@@ -157,4 +157,25 @@ public class Song {
 	public void setSongArtists(Hashtable<String, Artist> songArtists) {
 		this.songArtists = songArtists;
 	}
+	/*
+	public void addArtist(Artist artist) {
+		songArtists.put(artist.getArtistID(), artist);
+		String sql = "INSERT INTO song_artist(fk_song_id, fk_artist_id) VALUES (?, ?);";
+		try {
+			DbUtilities db = new DbUtilities();
+			Connection conn = db.getConn();
+			PreparedStatement ps = conn.prepareStatement(sql);
+			ps.setString(1, this.songID);
+			ps.setString(2, artist.getArtistID());
+			ps.executeUpdate();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	*/
+	
+	public void setFilePath(String filePath) {
+		
+	}
 }
