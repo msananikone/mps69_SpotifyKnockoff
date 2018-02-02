@@ -82,7 +82,10 @@ public class Album {
 			e.printStackTrace();
 		}	
 		}
-	
+	/**
+	 * @constructor Album(String albumID)
+	 * @param albumID String
+	 */
 	public Album(String albumID) {
 		albumSongs = new Hashtable<String, Song>();
 		String sql = "SELECT * FROM album WHERE album_id = '" + albumID + "';";
@@ -104,7 +107,16 @@ public class Album {
 			e.printStackTrace();
 		}
 	}
-	
+	/**
+	 * @constructor Album(
+	 * @param albumID String
+	 * @param title String
+	 * @param releaseDate String
+	 * @param recordingCompany String
+	 * @param numberOfTracks int
+	 * @param pmrcRating String
+	 * @param length double
+	 */
 	public Album(String albumID, String title, String releaseDate, String recordingCompany, int numberOfTracks, String pmrcRating, double length) {
 		this.title = title;
 		this.releaseDate = releaseDate;
@@ -115,14 +127,21 @@ public class Album {
 		this.albumID = albumID;
 		albumSongs = new Hashtable<String, Song>();
 	}
-	
+	/**
+	 * @method deleteAlbum(String albumID)
+	 * @param albumID String
+	 * Deletes album object from the db
+	 */
 	public void deleteAlbum(String albumID) {
 		String sql = "DELETE FROM album WHERE album_id = '" + albumID + "';";
 		DbUtilities db = new DbUtilities();
 		db.executeQuery(sql);
 		System.out.println("Album deleted from database.");
 	}
-	
+	/**
+	 * @method addSong(Song song)
+	 * @param song Song
+	 */
 	public void addSong(Song song) {
 		albumSongs.put(song.getSongID(), song);
 		String sql = "INSERT INTO album_song(fk_album_id, fk_song_id) VALUES (?, ?);";
@@ -141,12 +160,18 @@ public class Album {
 			e.printStackTrace();
 		}
 	}
-	
+	/**
+	 * @method deleteSong(String songID)
+	 * @param songID String
+	 */
 	public void deleteSong(String songID) {
 		Song song = new Song(songID);
 		albumSongs.remove(song);
 	}
-	
+	/**
+	 * @method deleteSong(Song song)
+	 * @param song Song
+	 */
 	public void deleteSong(Song song) {
 		albumSongs.remove(song, this.albumID);
 	}

@@ -65,7 +65,11 @@ public class Artist {
 			}
 		}	
 	}
-	
+	/**
+	 * @constructor Artist(String artistID)
+	 * @param artistID String
+	 * Passes in artistID to find a retrieve info of specified artist
+	 */
 	public Artist(String artistID) {
 		System.out.println("hi");
 		String sql = "SELECT * FROM artist WHERE artist_id = '" + artistID + "';";
@@ -85,7 +89,13 @@ public class Artist {
 			e.printStackTrace();
 		}
 	}
-	
+	/**
+	 * @constructor Artist(String artistID, String firstName, String lastName, String bandName)
+	 * @param artistID String
+	 * @param firstName String
+	 * @param lastName String
+	 * @param bandName String
+	 */
 	public Artist(String artistID, String firstName, String lastName, String bandName) {
 		this.firstName = firstName;
 		this.lastName = lastName;
@@ -94,16 +104,20 @@ public class Artist {
 		
 		songArtists = new Hashtable<String, Artist>();
 	}
-	
+	/**
+	 * @method deleteArtist(String artistID)
+	 * @param artistID String
+	 */
 	public void deleteArtist(String artistID) {
 		//String sql = "DELETE FROM artist WHERE artist_id = ?;";
 		
-		String sql = "ALTER TABLE `artist`"
-				+ " ADD CONSTRAINT `fk_song_has_artist_artist1` FOREIGN KEY (`fk_artist_id`) "
-				+ "REFERENCES `advertisers` (`artist_id`);";
+		//String sql = "ALTER TABLE `artist`"
+			//  + " ADD CONSTRAINT `fk_song_has_artist_artist1` FOREIGN KEY (`fk_artist_id`) "
+			//  + "REFERENCES `advertisers` (`artist_id`);";
 		//sql statement inspired from https://stackoverflow.com/questions/1905470/cannot-delete-or-update-a-parent-row-a-foreign-key-constraint-fails
 		
 		try {
+			String sql = "DELETE FROM artist WHERE artist_id = ?;";
 			DbUtilities db = new DbUtilities();
 			Connection conn = db.getConn();
 			PreparedStatement ps = conn.prepareStatement(sql);
