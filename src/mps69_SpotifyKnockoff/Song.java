@@ -97,7 +97,8 @@ public class Song {
 				
 	}
 	
-	/*@constructor Song(String songID ..)
+	/**
+	 * @constructor Song(String songID ..)
 	 * instead of setting songid to something random, setting to something passed in
 	 * if data already available, create songid instead of pull from db again
 	 */
@@ -112,7 +113,7 @@ public class Song {
 	
 	}	
 	
-	/*
+	/**
 	 * @method deleteSong(String songID)
 	 * @param songID String
 	 */
@@ -121,7 +122,7 @@ public class Song {
 		DbUtilities db = new DbUtilities();
 		db.executeQuery(sql);
 	}
-	/*
+	/**
 	 * @method addArtist(Artist artist)
 	 * @param artist Artist
 	 */
@@ -143,7 +144,7 @@ public class Song {
 			e.printStackTrace();
 		}
 	}
-	/*
+	/**
 	 * @method deleteArtist(String artistID)
 	 * @param artistID String
 	 */
@@ -153,7 +154,7 @@ public class Song {
 		songArtists.remove(artist);
 		System.out.println("deleteArtist(Artist artistID): Artist deleted from " + this.title);
 	}
-	/*
+	/**
 	 * @method deleteArtist(Artist artist)
 	 * @param artist Artist
 	 */
@@ -162,7 +163,7 @@ public class Song {
 		songArtists.remove(artist, this.songID);
 		System.out.println("deleteArtist(Artist artist): Artist deleted from " + this.title);
 	}
-	/*
+	/**
 	 * @method setFilePath(String filePath)
 	 * @param filePath String string of a song's file path
 	 */
@@ -184,7 +185,7 @@ public class Song {
 			e.printStackTrace();
 		}
 	}
-	/*
+	/**
 	 * @method getSongRecord()
 	 */
 	Vector<String> getSongRecord(){
