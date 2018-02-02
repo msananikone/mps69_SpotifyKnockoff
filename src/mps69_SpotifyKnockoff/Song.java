@@ -75,7 +75,6 @@ public class Song {
 	 * @param songID String
 	 * To pull out an existing song from the database
 	 */
-	
 	public Song(String songID){
 		songArtists = new Hashtable<String, Artist>();
 		String sql = "SELECT * FROM song WHERE song_id = '" + songID + "';";
@@ -112,12 +111,20 @@ public class Song {
 		songArtists = new Hashtable<String, Artist>();
 	
 	}	
+	
+	/*
+	 * @method deleteSong(String songID)
+	 * @param songID String
+	 */
 	public void deleteSong(String songID) {
 		String sql = "DELETE FROM song WHERE song_id = '" + songID + "';";
 		DbUtilities db = new DbUtilities();
 		db.executeQuery(sql);
 	}
-	
+	/*
+	 * @method addArtist(Artist artist)
+	 * @param artist Artist
+	 */
 	public void addArtist(Artist artist) {
 		songArtists.put(artist.getArtistID(), artist);
 		String sql = "INSERT INTO song_artist(fk_song_id, fk_artist_id) VALUES (?, ?);";
@@ -136,20 +143,29 @@ public class Song {
 			e.printStackTrace();
 		}
 	}
-	
+	/*
+	 * @method deleteArtist(String artistID)
+	 * @param artistID String
+	 */
 	public void deleteArtist(String artistID) {
 		System.out.println("deleteArtist(Artist artistID): Deleting artist..");
 		Artist artist = new Artist(artistID);
 		songArtists.remove(artist);
 		System.out.println("deleteArtist(Artist artistID): Artist deleted from " + this.title);
 	}
-	
+	/*
+	 * @method deleteArtist(Artist artist)
+	 * @param artist Artist
+	 */
 	public void deleteArtist(Artist artist) {
 		System.out.println("deleteArtist(Artist artist): Deleting artist..");
 		songArtists.remove(artist, this.songID);
 		System.out.println("deleteArtist(Artist artist): Artist deleted from " + this.title);
 	}
-	
+	/*
+	 * @method setFilePath(String filePath)
+	 * @param filePath String string of a song's file path
+	 */
 	public void setFilePath(String filePath) {
 		this.filePath = filePath;
 		String sql = "UPDATE song SET file_path = ? WHERE song_id = ?";
@@ -165,11 +181,12 @@ public class Song {
 			conn.close();
 			db = null;
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
-	
+	/*
+	 * @method getSongRecord()
+	 */
 	Vector<String> getSongRecord(){
 		Vector<String> songRecord = new Vector<>(6); //6 items (title,title length filepath releasedate recorddate)
 		songRecord.add(this.songID);
@@ -181,6 +198,7 @@ public class Song {
 		return songRecord;
 	}
 	
+	//Getter and Setters
 	public String getReleaseDate() {
 		return releaseDate;
 	}
