@@ -1,0 +1,4 @@
+Jan 30, 2018 10:09:30 PM mps69_SpotifyKnockoff.ErrorLogger main
+INFO: Testing
+Jan 30, 2018 10:09:30 PM mps69_SpotifyKnockoff.ErrorLogger main
+INFO: Hi How r u?

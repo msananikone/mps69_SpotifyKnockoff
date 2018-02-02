@@ -23,8 +23,8 @@ public class Album {
 	private int numberOfTracks;
 	private String pmrcRating;
 	private double length;
-	Hashtable <Song, Song> albumSongs;
-	Hashtable<String, Artist> songArtists;
+	//Map<String, Artist> songArtists;
+	Map <String, Song> albumSongs;
 	
 	/**
 	 * @constructor Album(String title, String releaseDate, String recordingCompany, int numberOfTracks, String pmrcRating, int length)
@@ -84,6 +84,7 @@ public class Album {
 		}
 	
 	public Album(String albumID) {
+		albumSongs = new Hashtable<String, Song>();
 		String sql = "SELECT * FROM album WHERE album_id = '" + albumID + "';";
 		DbUtilities db = new DbUtilities();
 		try {
@@ -104,30 +105,50 @@ public class Album {
 		}
 	}
 	
-	private void deleteAlbum(String albumID) {
+	public Album(String albumID, String title, String releaseDate, String recordingCompany, int numberOfTracks, String pmrcRating, double length) {
+		this.title = title;
+		this.releaseDate = releaseDate;
+		this.recordingCompany = recordingCompany;
+		this.numberOfTracks = numberOfTracks;
+		this.pmrcRating = pmrcRating;
+		this.length = length;
+		this.albumID = albumID;
+		albumSongs = new Hashtable<String, Song>();
+	}
+	
+	public void deleteAlbum(String albumID) {
 		String sql = "DELETE FROM album WHERE album_id = '" + albumID + "';";
 		DbUtilities db = new DbUtilities();
 		db.executeQuery(sql);
 		System.out.println("Album deleted from database.");
 	}
 	
-	private void addSong(Song song) {
-		/*
-		albumSongs.put(song, this.albumID);
-		System.out.println("Added song to " + this.title);
-		*/
+	public void addSong(Song song) {
+		albumSongs.put(song.getSongID(), song);
+		String sql = "INSERT INTO album_song(fk_album_id, fk_song_id) VALUES (?, ?);";
+		try {
+			DbUtilities db = new DbUtilities();
+			Connection conn = db.getConn();
+			PreparedStatement ps = conn.prepareStatement(sql);
+			
+			ps.setString(1, this.albumID);
+			ps.setString(2, song.getSongID());
+			
+			ps.executeUpdate();
+			db.closeDbConnection();
+			db = null;
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
 	}
 	
-	private void deleteSong(String songID) {
+	public void deleteSong(String songID) {
 		Song song = new Song(songID);
 		albumSongs.remove(song);
-		//this.title = album "title" from db
-		System.out.println("Deleted song from " + this.title);
 	}
 	
-	private void deleteSong(Song song) {
-		albumSongs.remove(song);
-		System.out.println("Deleted song from " + this.title);
+	public void deleteSong(Song song) {
+		albumSongs.remove(song, this.albumID);
 	}
 	
 	//Getters
@@ -184,14 +205,10 @@ public class Album {
 	public void setLength(int length) {
 		this.length = length;
 	}
-	/*public void setAlbumSongs(Map<Song, Song> albumSongs) {
+	public void setAlbumSongs(Hashtable<String, Song> albumSongs) {
 		this.albumSongs = albumSongs;
-	}*/
+	}
 	public void setCoverImagePath(String coverImagePath) {
 		this.coverImagePath = coverImagePath;
-	}
-	
-	public Hashtable<String, Artist> getSongArtists() {
-		return songArtists;
 	}	
 }
