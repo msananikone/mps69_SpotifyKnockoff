@@ -18,36 +18,9 @@ public class ErrorLogger {
 		
 		//Information needed: Date, Time, errorMessage \n
 		//String will look like: 01/30/2018, 10:44:44 PM, Table 'spotify_knockoff.song' doesn't exist
-	    
-		/*Logger logger = Logger.getLogger("Spotify Error Log");  
-	    FileHandler fh;
-	    
-    	String fileName = "errorlogger.txt";
-	    try
-	    {
-	        fileName = "errorlogger.txt";
-	        FileWriter fw = new FileWriter(fileName,true); //the true will append the new data
-	        fh = new FileHandler(fileName);  
-	        logger.addHandler(fh);
-	        SimpleFormatter formatter = new SimpleFormatter();  
-	        fh.setFormatter(formatter);  //formats message
-	        logger.info("Testing");
-	        fw.write(errorMessage + "\n");//appends the string to the file
-	        fw.close();
-	    }
-	    catch(IOException e)
-	    {
-	    	fileName = "errorlogger.txt";
-	    	PrintWriter pw =  new PrintWriter(fileName);
-	    	FileWriter fw = new FileWriter(fileName,true);
-	    	pw = new PrintWriter (fw);
-	    	e.printStackTrace (pw);
-	    }
-		    
-		    */
-		BufferedWriter bw = null;
+	    String filePath = "src/data/errorLog.txt";
 		try {
-			bw = new BufferedWriter(new FileWriter("errorlog.txt", true));
+			BufferedWriter bw = new BufferedWriter(new FileWriter(filePath,true));
 			DateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy,HH:mm:ss,");
 			Date date = new Date();
 			bw.write(dateFormat.format(date));
