@@ -58,11 +58,7 @@ public class Artist {
 			db = null;
 		} catch (SQLException e){
 			e.printStackTrace();
-			try {
-				ErrorLogger.log(e.toString());
-			} catch (IOException e1) {
-				e1.printStackTrace();
-			}
+			ErrorLogger.log(e.getMessage());
 		}	
 	}
 	/**
@@ -71,7 +67,6 @@ public class Artist {
 	 * Passes in artistID to find a retrieve info of specified artist
 	 */
 	public Artist(String artistID) {
-		System.out.println("hi");
 		String sql = "SELECT * FROM artist WHERE artist_id = '" + artistID + "';";
 		DbUtilities db = new DbUtilities();
 		try {
@@ -104,20 +99,20 @@ public class Artist {
 		
 		songArtists = new Hashtable<String, Artist>();
 	}
-	/**
+	/** Deletes an artist from the db using artistID as the key
 	 * @method deleteArtist(String artistID)
 	 * @param artistID String
 	 */
 	public void deleteArtist(String artistID) {
-		//String sql = "DELETE FROM artist WHERE artist_id = ?;";
+		String sql = " DELETE FROM song_artist WHERE fk_artist_id =  ?;";
+		sql += " DELETE FROM artist WHERE artist_id = ?;";
 		
 		//String sql = "ALTER TABLE `artist`"
 			//  + " ADD CONSTRAINT `fk_song_has_artist_artist1` FOREIGN KEY (`fk_artist_id`) "
-			//  + "REFERENCES `advertisers` (`artist_id`);";
+			  //+ "REFERENCES `advertisers` (`artist_id`);";
 		//sql statement inspired from https://stackoverflow.com/questions/1905470/cannot-delete-or-update-a-parent-row-a-foreign-key-constraint-fails
 		
 		try {
-			String sql = "DELETE FROM artist WHERE artist_id = ?;";
 			DbUtilities db = new DbUtilities();
 			Connection conn = db.getConn();
 			PreparedStatement ps = conn.prepareStatement(sql);
@@ -127,6 +122,7 @@ public class Artist {
 			db = null;
 		} catch (SQLException e) {
 			e.printStackTrace();
+			ErrorLogger.log(e.getMessage());
 		}
 		System.out.println("Artist deleted from db");
 	}
@@ -161,9 +157,25 @@ public class Artist {
 		return bio;
 	}
 
-	public void setBio(String bio) {
-		this.bio = bio;
-	}
+    public void setBio(String bio) {
+        this.bio = bio;
+        String sql = "UPDATE artist SET bio = ? WHERE artist_id = ?;";
+        try {
+            DbUtilities db = new DbUtilities();
+            PreparedStatement pstmt = db.getConn().prepareStatement(sql);
+            pstmt.setString(1,bio);
+            pstmt.setString(2, this.artistID);
+
+            //execute-close-destroy
+            pstmt.executeUpdate();
+            pstmt.close();
+            db.closeDbConnection();
+            db = null;
+        }catch (SQLException e){
+            e.printStackTrace();
+            ErrorLogger.log(e.getMessage());
+        }
+    }//END setBio
 
 	public String getArtistID() {
 		return artistID;

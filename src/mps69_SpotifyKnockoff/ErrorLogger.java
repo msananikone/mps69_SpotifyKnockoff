@@ -13,12 +13,12 @@ import java.util.logging.*;
 
 public class ErrorLogger {
 	//static so we don't have to create an instance, just care about calling it
-	public static void log(String errorMessage) throws IOException{		
+	public static void log(String errorMessage){		
 		//Save the following information to errorlog.txt
 		
 		//Information needed: Date, Time, errorMessage \n
 		//String will look like: 01/30/2018, 10:44:44 PM, Table 'spotify_knockoff.song' doesn't exist
-	    String filePath = "src/data/errorLog.txt";
+	    String filePath = "errorlog.txt";
 		try {
 			BufferedWriter bw = new BufferedWriter(new FileWriter(filePath,true));
 			DateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy,HH:mm:ss,");

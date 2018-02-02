@@ -1,0 +1,7 @@
+02/02/2018,14:22:00,Parameter index out of range (1 > number of parameters, which is 0).
+02/02/2018,14:22:16,Cannot delete or update a parent row: a foreign key constraint fails (`spotify_knockoff`.`song_artist`, CONSTRAINT `fk_song_has_artist_artist1` FOREIGN KEY (`fk_artist_id`) REFERENCES `artist` (`artist_id`) ON DELETE NO ACTION ON UPDATE NO ACTION)
+02/02/2018,14:24:44,No value specified for parameter 2
+02/02/2018,14:27:03,No value specified for parameter 2
+02/02/2018,14:28:31,You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'DELETE FROM artist WHERE artist_id = '1c89bea6-6453-41fd-a159-565883c1e07c'' at line 1
+02/02/2018,14:29:17,You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'DELETE FROM artist WHERE artist_id = '1c89bea6-6453-41fd-a159-565883c1e07c'' at line 1
+02/02/2018,14:29:26,No value specified for parameter 2

@@ -84,13 +84,12 @@ public class SpotifyTester
 			System.out.println();
 		}
 		*/
-		
+		/*
 		//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~Create objects~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 		Song so1 = new Song("Blessed Be Your Name", 5.48, "2015-07-07", "2015-01-01");
 		//Song so1 = new Song("a54ba89d-ac33-4ffb-abd5-d600b7abb764");
-		//Artist ar1 = new Artist("Matt", "Redman", "");
-		Artist ar2 = new Artist("1c89bea6-6453-41fd-a159-565883c1e07c");
-		//String title, String releaseDate, String recordingCompany, int numberOfTracks, String pmrcRating, double length
+		Artist ar1 = new Artist("Matt", "Redman", "");
+		//Artist ar2 = new Artist("1c89bea6-6453-41fd-a159-565883c1e07c");
 		Album al1 = new Album("The Songs of Matt Redman Vol. 1", "2015-07-07", "Survivor", 12, "1", 59.34);
 		Album al2;
 		
@@ -108,19 +107,11 @@ public class SpotifyTester
 		//System.out.println("Adding artist " + ar1.getFirstName() + " " + ar1.getLastName() + 
 		//		" with fk_artist_id " + ar1.getArtistID() + " to fk_song_id " + so1.getSongID());
 		//so1.addArtist(ar1);
-		System.out.println();
 		
-		//delete artist using artistid as key
-		System.out.println("Deleting at " + ar2.getArtistID());
-		ar2.deleteArtist(ar2.getArtistID());
-		
-		
-		/*
 		//--------------------------addSong(song:Song)-------------------------------------
 		System.out.println("Adding song: " + so1.getTitle() + "\nto Album: " + al1.getTitle() + 
 				"\nwith fk_song_id: " + so1.getSongID() + "\nto fk_album_id: " + al1.getAlbumID());
 		al1.addSong(so1);
-		System.out.println("hello");
 		
 		//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~Delete objects from things~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 		//--------------------------deleteSong(songID:String) from Song-----------------------------
@@ -144,6 +135,9 @@ public class SpotifyTester
 		al1.deleteSong(so1);
 		//--------------------------deleteAlbum(albumID:String)
 		al1.deleteAlbum(al1.getAlbumID());
-*/
+		 */
+		
+		Artist art1 = new Artist ("1c89bea6-6453-41fd-a159-565883c1e07c");
+		art1.deleteArtist(art1.getArtistID());
 	}
 }

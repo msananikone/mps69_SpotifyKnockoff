@@ -50,6 +50,8 @@ public class Album {
 		this.length = length;
 		this.albumID = UUID.randomUUID().toString(); //without toString, it returns an object
 		
+		albumSongs = new Hashtable<String, Song>();
+		
 		//System.out.println(this.songID); //go to tester class and create a song
 		//String sql = "INSERT INTO song (song_id,title,length,file_path,release_date,record_date,fk_album_id) "; //need trailing space so VALUES sql is called correctly
 		//sql += "VALUES ('" + this.songID + "', '" + this.title + "', " + this.length + ", '', '" + this.releaseDate + "', '" + this.recordDate + "', '" + this.albumID + "');";
