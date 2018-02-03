@@ -106,11 +106,10 @@ public class Artist {
 	 */
 	public void deleteArtist(String artistID) {
 		String sql = " DELETE FROM song_artist WHERE fk_artist_id =  ?;";
-		sql += " DELETE FROM artist WHERE artist_id = ?;";
 		
 		//String sql = "ALTER TABLE `artist`"
-			//  + " ADD CONSTRAINT `fk_song_has_artist_artist1` FOREIGN KEY (`fk_artist_id`) "
-			  //+ "REFERENCES `advertisers` (`artist_id`);";
+		//  + " ADD CONSTRAINT `fk_song_has_artist_artist1` FOREIGN KEY (`fk_artist_id`) "
+		//  + "REFERENCES `advertisers` (`artist_id`);";
 		//sql statement inspired from https://stackoverflow.com/questions/1905470/cannot-delete-or-update-a-parent-row-a-foreign-key-constraint-fails
 		
 		try {

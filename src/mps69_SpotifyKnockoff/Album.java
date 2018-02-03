@@ -75,6 +75,7 @@ public class Album {
 			db = null;
 		} catch (SQLException e){
 			e.printStackTrace();
+			ErrorLogger.log(e.getMessage());
 		}	
 		}
 	/**
@@ -100,6 +101,7 @@ public class Album {
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
+			ErrorLogger.log(e.getMessage());
 		}
 	}
 	/**
@@ -163,6 +165,7 @@ public class Album {
 			db = null;
 		} catch (SQLException e) {
 			e.printStackTrace();
+			ErrorLogger.log(e.getMessage());
 		}
 	}
 	/**

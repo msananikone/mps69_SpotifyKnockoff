@@ -5,3 +5,12 @@
 02/02/2018,14:28:31,You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'DELETE FROM artist WHERE artist_id = '1c89bea6-6453-41fd-a159-565883c1e07c'' at line 1
 02/02/2018,14:29:17,You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'DELETE FROM artist WHERE artist_id = '1c89bea6-6453-41fd-a159-565883c1e07c'' at line 1
 02/02/2018,14:29:26,No value specified for parameter 2
+02/02/2018,19:56:52,Cannot delete or update a parent row: a foreign key constraint fails (`spotify_knockoff`.`song_artist`, CONSTRAINT `fk_song_has_artist_song` FOREIGN KEY (`fk_song_id`) REFERENCES `song` (`song_id`) ON DELETE NO ACTION ON UPDATE NO ACTION)
+02/02/2018,19:56:54,No value specified for parameter 2
+02/02/2018,19:56:54,Cannot delete or update a parent row: a foreign key constraint fails (`spotify_knockoff`.`song_artist`, CONSTRAINT `fk_song_has_artist_song` FOREIGN KEY (`fk_song_id`) REFERENCES `song` (`song_id`) ON DELETE NO ACTION ON UPDATE NO ACTION)
+02/02/2018,19:56:56,No value specified for parameter 2
+02/02/2018,19:56:57,No value specified for parameter 2
+02/02/2018,19:56:58,No value specified for parameter 2
+02/02/2018,19:56:59,No value specified for parameter 2
+02/02/2018,19:57:02,No value specified for parameter 2
+02/02/2018,20:00:03,Cannot delete or update a parent row: a foreign key constraint fails (`spotify_knockoff`.`song_artist`, CONSTRAINT `fk_song_has_artist_song` FOREIGN KEY (`fk_song_id`) REFERENCES `song` (`song_id`) ON DELETE NO ACTION ON UPDATE NO ACTION)
