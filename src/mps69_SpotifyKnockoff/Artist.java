@@ -20,10 +20,10 @@ public class Artist {
 	private String lastName;
 	private String bandName;
 	private String bio;
-	Hashtable<String, Artist> songArtists;
+	//Hashtable<String, Artist> songArtists;
 	
 	/**
-	 * @constructor Artist(String firstName, String lastName, String bandName)
+	 * Class constructor
 	 * @param firstName String
 	 * @param lastName double
 	 * @param bandName String
@@ -34,6 +34,8 @@ public class Artist {
 		this.lastName = lastName;
 		this.bandName = bandName;
 		this.artistID = UUID.randomUUID().toString(); //without toString, it returns an object
+		
+		//songArtists = new Hashtable<String, Artist>();
 		
 		//Trailing space is important for query to properly execute in MySQL
 		String sql = "INSERT INTO artist (artist_id,first_name,last_name,band_name,bio) ";
@@ -62,9 +64,8 @@ public class Artist {
 		}	
 	}
 	/**
-	 * @constructor Artist(String artistID)
+	 * Class constructor, passes in artistID to find a retrieve info of specified artist
 	 * @param artistID String
-	 * Passes in artistID to find a retrieve info of specified artist
 	 */
 	public Artist(String artistID) {
 		String sql = "SELECT * FROM artist WHERE artist_id = '" + artistID + "';";
@@ -73,19 +74,20 @@ public class Artist {
 			ResultSet rs = db.getResultSet(sql);
 			while(rs.next()){
 				this.artistID = rs.getString("artist_id");
-				System.out.println("Artist ID from database: " + this.artistID);
+				//System.out.println("Artist ID from database: " + this.artistID);
 				this.firstName = rs.getString("first_name");
 				this.lastName = rs.getString("last_name");
 				this.bandName = rs.getString("band_name");
 				this.bio = rs.getString("bio"); //if there isnt a bio, it is set as null in the db
-				System.out.println("Artist from database: " + this.firstName + " " + this.lastName);
+				//System.out.println("Artist from database: " + this.firstName + " " + this.lastName);
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
+			ErrorLogger.log(e.getMessage());
 		}
 	}
 	/**
-	 * @constructor Artist(String artistID, String firstName, String lastName, String bandName)
+	 * Class constructor
 	 * @param artistID String
 	 * @param firstName String
 	 * @param lastName String
@@ -97,10 +99,9 @@ public class Artist {
 		this.bandName = bandName;
 		this.artistID = artistID;
 		
-		songArtists = new Hashtable<String, Artist>();
+		//songArtists = new Hashtable<String, Artist>();
 	}
 	/** Deletes an artist from the db using artistID as the key
-	 * @method deleteArtist(String artistID)
 	 * @param artistID String
 	 */
 	public void deleteArtist(String artistID) {
@@ -116,7 +117,9 @@ public class Artist {
 			DbUtilities db = new DbUtilities();
 			Connection conn = db.getConn();
 			PreparedStatement ps = conn.prepareStatement(sql);
+			
 			ps.setString(1, artistID);
+			
 			ps.executeUpdate();
 			db.closeDbConnection();
 			db = null;
@@ -124,11 +127,11 @@ public class Artist {
 			e.printStackTrace();
 			ErrorLogger.log(e.getMessage());
 		}
-		System.out.println("Artist deleted from db");
+		//System.out.println("Artist deleted from db");
 	}
 	
 	//Getters and Setters
-	//make setter for bio
+	//note: make setter for bio
 	public String getFirstName() {
 		return firstName;
 	}
@@ -160,29 +163,25 @@ public class Artist {
     public void setBio(String bio) {
         this.bio = bio;
         String sql = "UPDATE artist SET bio = ? WHERE artist_id = ?;";
-        try {
-            DbUtilities db = new DbUtilities();
-            PreparedStatement pstmt = db.getConn().prepareStatement(sql);
-            pstmt.setString(1,bio);
-            pstmt.setString(2, this.artistID);
-
-            //execute-close-destroy
-            pstmt.executeUpdate();
-            pstmt.close();
-            db.closeDbConnection();
-            db = null;
-        }catch (SQLException e){
-            e.printStackTrace();
-            ErrorLogger.log(e.getMessage());
-        }
-    }//END setBio
+        
+		try {
+			DbUtilities db = new DbUtilities();
+			Connection conn = db.getConn();
+			PreparedStatement ps = conn.prepareStatement(sql);
+			
+            ps.setString(1,bio);
+            ps.setString(2, this.artistID);
+            
+			ps.executeUpdate();
+			db.closeDbConnection();
+			db = null;
+		} catch (SQLException e) {
+			e.printStackTrace();
+			ErrorLogger.log(e.getMessage());
+		}
+    }
 
 	public String getArtistID() {
 		return artistID;
 	}
-	
-	public void addArtist(Artist artist) {
-		songArtists.put(artist.getArtistID(), artist);
-	}
-	
 }

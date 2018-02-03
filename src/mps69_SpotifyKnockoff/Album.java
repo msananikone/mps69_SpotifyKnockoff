@@ -23,11 +23,10 @@ public class Album {
 	private int numberOfTracks;
 	private String pmrcRating;
 	private double length;
-	//Map<String, Artist> songArtists;
 	Map <String, Song> albumSongs;
 	
 	/**
-	 * @constructor Album(String title, String releaseDate, String recordingCompany, int numberOfTracks, String pmrcRating, int length)
+	 * Class constructor, creates album record in db
 	 * @param title String
 	 * @param releaseDate String
 	 * @param recordingCompany String
@@ -36,12 +35,6 @@ public class Album {
 	 * @param length double
 	 */
 	public Album(String title, String releaseDate, String recordingCompany, int numberOfTracks, String pmrcRating, double length) {
-		/**
-		 * Create new album record in the db
-		 * Create new Album OBJECT
-		 * Generate an albumID using java.util.UUID.randomUUIUD()
-		 * Set corresponding class properties
-		 */
 		this.title = title;
 		this.releaseDate = releaseDate;
 		this.recordingCompany = recordingCompany;
@@ -85,7 +78,7 @@ public class Album {
 		}	
 		}
 	/**
-	 * @constructor Album(String albumID)
+	 * Class constructor that passes in albumID only and doesn't create new object
 	 * @param albumID String
 	 */
 	public Album(String albumID) {
@@ -110,7 +103,7 @@ public class Album {
 		}
 	}
 	/**
-	 * @constructor Album(
+	 * Class constructor with hashtable
 	 * @param albumID String
 	 * @param title String
 	 * @param releaseDate String
@@ -130,18 +123,28 @@ public class Album {
 		albumSongs = new Hashtable<String, Song>();
 	}
 	/**
-	 * @method deleteAlbum(String albumID)
+	 * Deletes an album from the database using albumID as the key
 	 * @param albumID String
-	 * Deletes album object from the db
 	 */
 	public void deleteAlbum(String albumID) {
-		String sql = "DELETE FROM album WHERE album_id = '" + albumID + "';";
-		DbUtilities db = new DbUtilities();
-		db.executeQuery(sql);
-		System.out.println("Album deleted from database.");
+		String sql = "DELETE FROM album WHERE album_id = ?;";
+	
+		try {
+			DbUtilities db = new DbUtilities();
+			Connection conn = db.getConn();
+			PreparedStatement ps = conn.prepareStatement(sql);
+			ps.setString(1, albumID);
+			ps.executeUpdate();
+			db.closeDbConnection();
+			db = null;
+		} catch (SQLException e) {
+			e.printStackTrace();
+			ErrorLogger.log(e.getMessage());
+		}
+		System.out.println("Artist deleted from db");
 	}
 	/**
-	 * @method addSong(Song song)
+	 * Adds new Song object to album song list albumSongs
 	 * @param song Song
 	 */
 	public void addSong(Song song) {
@@ -163,7 +166,7 @@ public class Album {
 		}
 	}
 	/**
-	 * @method deleteSong(String songID)
+	 * Deletes a song from the list of the album’s songs by songID
 	 * @param songID String
 	 */
 	public void deleteSong(String songID) {
@@ -171,7 +174,7 @@ public class Album {
 		albumSongs.remove(song);
 	}
 	/**
-	 * @method deleteSong(Song song)
+	 * Deletes a song from the list of the album’s songs by songID property of the corresponding Song object
 	 * @param song Song
 	 */
 	public void deleteSong(Song song) {

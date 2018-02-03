@@ -20,7 +20,7 @@ public class Song {
 	private String filePath;
 	private String releaseDate;
 	private String recordDate;
-	Map <String, Artist>songArtists;
+	Map <String, Artist> songArtists;
 	
 	/**
 	 * @constructor Song(String title, double length, String releaseDate, String recordDate)
@@ -67,6 +67,7 @@ public class Song {
 			db = null;
 		} catch (SQLException e){
 			e.printStackTrace();
+			ErrorLogger.log(e.getMessage());
 		}	
 	}
 	
@@ -93,6 +94,7 @@ public class Song {
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
+			ErrorLogger.log(e.getMessage());
 		}
 				
 	}
@@ -118,9 +120,19 @@ public class Song {
 	 * @param songID String
 	 */
 	public void deleteSong(String songID) {
-		String sql = "DELETE FROM song WHERE song_id = '" + songID + "';";
-		DbUtilities db = new DbUtilities();
-		db.executeQuery(sql);
+		String sql = "DELETE FROM song WHERE song_id = ?;";
+		try {
+			DbUtilities db = new DbUtilities();
+			Connection conn = db.getConn();
+			PreparedStatement ps = conn.prepareStatement(sql);
+			ps.setString(1, songID);
+			ps.executeUpdate();
+			db.closeDbConnection();
+			db = null;
+		} catch (SQLException e) {
+			e.printStackTrace();
+			ErrorLogger.log(e.getMessage());
+		}
 	}
 	/**
 	 * @method addArtist(Artist artist)
@@ -142,6 +154,7 @@ public class Song {
 			db = null;
 		} catch (SQLException e) {
 			e.printStackTrace();
+			ErrorLogger.log(e.getMessage());
 		}
 	}
 	/**
@@ -149,19 +162,15 @@ public class Song {
 	 * @param artistID String
 	 */
 	public void deleteArtist(String artistID) {
-		System.out.println("deleteArtist(Artist artistID): Deleting artist..");
 		Artist artist = new Artist(artistID);
 		songArtists.remove(artist);
-		System.out.println("deleteArtist(Artist artistID): Artist deleted from " + this.title);
 	}
 	/**
 	 * @method deleteArtist(Artist artist)
 	 * @param artist Artist
 	 */
 	public void deleteArtist(Artist artist) {
-		System.out.println("deleteArtist(Artist artist): Deleting artist..");
 		songArtists.remove(artist, this.songID);
-		System.out.println("deleteArtist(Artist artist): Artist deleted from " + this.title);
 	}
 	/**
 	 * @method setFilePath(String filePath)
@@ -183,6 +192,7 @@ public class Song {
 			db = null;
 		} catch (SQLException e) {
 			e.printStackTrace();
+			ErrorLogger.log(e.getMessage());
 		}
 	}
 	/**
