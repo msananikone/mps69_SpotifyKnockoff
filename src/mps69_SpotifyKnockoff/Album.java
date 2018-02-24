@@ -263,7 +263,7 @@ public class Album {
 	public void setPmrcRating(String pmrcRating) {
 		this.pmrcRating = pmrcRating;
 	}
-	public void setLength(int length) {
+	public void setLength(double length) {
 		this.length = length;
 	}
 	public void setAlbumSongs(Hashtable<String, Song> albumSongs) {

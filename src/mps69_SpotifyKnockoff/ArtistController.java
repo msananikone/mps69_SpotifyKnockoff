@@ -3,6 +3,7 @@ package mps69_SpotifyKnockoff;
 import java.util.UUID;
 import javax.persistence.*;
 
+//similar to SongController, just changed to match attributes
 public class ArtistController {
 	
 	EntityManagerFactory emfactory;
@@ -23,7 +24,7 @@ public class ArtistController {
 		emanager.persist(a);
 		emanager.getTransaction().commit();
 		
-		emanager.close();
+		emanager.close();//be sure to close connections
 		emfactory.close();
 		
 		return a;
@@ -35,7 +36,7 @@ public class ArtistController {
 		emanager.persist(a);
 		emanager.getTransaction().commit();
 		
-		emanager.close();
+		emanager.close();//be sure to close connections
 		emfactory.close();
 		
 		return a;
@@ -55,7 +56,7 @@ public class ArtistController {
 		emanager.persist(a);
 		emanager.getTransaction().commit();
 		
-		emanager.close();
+		emanager.close(); //be sure to close connections
 		emfactory.close();
 		
 		return a;

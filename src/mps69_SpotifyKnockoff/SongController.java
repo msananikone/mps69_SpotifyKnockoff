@@ -8,6 +8,7 @@ public class SongController {
 	EntityManager emanager;
 	
 	public SongController(){
+		//from SongCreate() we did in lecture
 		emfactory = Persistence.createEntityManagerFactory("mps69_SpotifyKnockoff");
 		emanager = emfactory.createEntityManager();
 	}
@@ -24,7 +25,7 @@ public class SongController {
 		emanager.persist(s);
 		emanager.getTransaction().commit();
 		
-		emanager.close();
+		emanager.close(); //be sure to close connections
 		emfactory.close();
 		
 		return s;
@@ -37,7 +38,7 @@ public class SongController {
 		emanager.persist(s);
 		emanager.getTransaction().commit();
 		
-		emanager.close();
+		emanager.close(); //be sure to close connections
 		emfactory.close();
 		
 		return s;
@@ -60,7 +61,7 @@ public class SongController {
 		emanager.persist(s);
 		emanager.getTransaction().commit();
 		
-		emanager.close();
+		emanager.close(); //be sure to close connections
 		emfactory.close();
 		
 		return s;
