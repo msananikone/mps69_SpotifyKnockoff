@@ -12,16 +12,36 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.*;
+import javax.persistence.*;
 
 public class Song {
-	private String songID;
-	private String title;
-	private double length;
-	private String filePath;
-	private String releaseDate;
-	private String recordDate;
-	Map <String, Artist> songArtists;
+	@Id
+	@GeneratedValue(strategy = GenerationType.AUTO)
 	
+	@Column (name = "song_id")
+	private String songID;
+	
+	@Column (name = "title")
+	private String title;
+	
+	@Column (name = "length")
+	private double length;
+	
+	@Column (name = "file_path")
+	private String filePath;
+	
+	@Column (name = "release_date")
+	private String releaseDate;
+	
+	@Column (name = "record_date")
+	private String recordDate;
+	
+	@Transient
+	private Map<String, Artist> songArtists = new HashMap<>();
+	
+	public Song() {
+		super();
+	}
 	/**
 	 * @constructor Song(String title, double length, String releaseDate, String recordDate)
 	 * @param songID String
@@ -29,8 +49,7 @@ public class Song {
 	 * @param releaseDate String
 	 * @param recordDate String
 	 * To add a song that doesn't exist in the database
-	 */
-	
+	*/
 	public Song(String title, double length, String releaseDate, String recordDate){
 		this.title = title;
 		this.length = length;
@@ -38,11 +57,7 @@ public class Song {
 		this.recordDate = recordDate;
 		this.songID = UUID.randomUUID().toString(); //without toString, it returns an object		
 		songArtists = new Hashtable<String, Artist>();
-		
-		//System.out.println(this.songID); //go to tester class and create a song
-		//String sql = "INSERT INTO song (song_id,title,length,file_path,release_date,record_date,fk_album_id) "; //need trailing space so VALUES sql is called correctly
-		//sql += "VALUES ('" + this.songID + "', '" + this.title + "', " + this.length + ", '', '" + this.releaseDate + "', '" + this.recordDate + "', '" + this.albumID + "');";
-		
+
 		//Trailing space is important for query to properly execute in MySQL
 		String sql = "INSERT INTO song (song_id,title,length,file_path,release_date,record_date) ";
 		sql += "VALUES (?, ?, ?, ?, ?, ?);";
@@ -70,7 +85,6 @@ public class Song {
 			ErrorLogger.log(e.getMessage());
 		}	
 	}
-	
 	/**
 	 * @constructor Song(String songID)
 	 * @param songID String
@@ -98,7 +112,6 @@ public class Song {
 		}
 				
 	}
-	
 	/**
 	 * @constructor Song(String songID ..)
 	 * instead of setting songid to something random, setting to something passed in
@@ -114,7 +127,6 @@ public class Song {
 		songArtists = new Hashtable<String, Artist>();
 	
 	}	
-	
 	/**
 	 * @method deleteSong(String songID)
 	 * @param songID String
@@ -208,7 +220,6 @@ public class Song {
 		songRecord.addElement(this.recordDate);
 		return songRecord;
 	}
-	
 	//Getter and Setters
 	public String getReleaseDate() {
 		return releaseDate;

@@ -11,17 +11,40 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.HashMap;
 import java.util.Hashtable;
+import java.util.Map;
 import java.util.UUID;
+import javax.persistence.*;
 
+@Entity
+@Table (name = "artist")
 public class Artist {
-	private String artistID;
-	private String firstName;
-	private String lastName;
-	private String bandName;
-	private String bio;
-	//Hashtable<String, Artist> songArtists;
 	
+	@Id
+	@GeneratedValue(strategy = GenerationType.AUTO)
+	@Column (name = "artist_id")
+	private String artistID;
+	
+	@Column (name = "first_name")
+	private String firstName; 
+	
+	@Column (name = "last_name")
+	private String lastName;
+	
+	@Column (name = "band_name")
+	private String bandName;
+	
+	@Column (name = "bio")
+	private String bio;
+	
+	@Transient
+	private Map<String, Song> artistSongs = new HashMap<>();
+	
+	public Artist(){
+		super();
+	}
+
 	/**
 	 * Class constructor
 	 * @param firstName String

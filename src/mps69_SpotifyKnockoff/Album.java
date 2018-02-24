@@ -10,21 +10,49 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.HashMap;
 import java.util.Hashtable;
 import java.util.Map;
 import java.util.UUID;
+import javax.persistence.*;
 
+@Entity
+@Table (name = "album")
 public class Album {
-	private String albumID;
-	private String title;
-	private String releaseDate;
-	private String coverImagePath;
-	private String recordingCompany;
-	private int numberOfTracks;
-	private String pmrcRating;
-	private double length;
-	Map <String, Song> albumSongs;
 	
+	@Id
+	@GeneratedValue(strategy = GenerationType.AUTO)
+	@Column (name = "album_id")
+	private String albumID;
+	
+	@Column (name = "title")
+	private String title;
+	
+	@Column (name = "release_date")
+	private String releaseDate;
+	
+	@Column (name = "cover_image_path")
+	private String coverImagePath;
+	
+	@Column (name = "recording_company_name")
+	private String recordingCompany;
+	
+	@Column (name = "number_of_tracks")
+	private int numberOfTracks;
+	
+	@Column (name = "PMRC_rating")
+	private String pmrcRating;
+	
+	@Column (name = "length")
+	private double length;
+	
+	@Transient
+	private Map<String, Song> albumSongs = new HashMap<>();
+	
+	
+	public Album(){
+		super();
+	}
 	/**
 	 * Class constructor, creates album record in db
 	 * @param title String
