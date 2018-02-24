@@ -8,7 +8,7 @@ public class SongController {
 	EntityManager emanager;
 	
 	public SongController(){
-		emfactory = Persistence.createEntityManagerFactory("tpk18_SpotifyKnockoff");
+		emfactory = Persistence.createEntityManagerFactory("mps69_SpotifyKnockoff");
 		emanager = emfactory.createEntityManager();
 	}
 	
